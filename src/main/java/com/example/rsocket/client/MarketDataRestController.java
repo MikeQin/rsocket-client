@@ -39,15 +39,16 @@ public class MarketDataRestController {
                 .retrieveFlux(MarketData.class);
     }
 
-    @GetMapping(value = "/collect")
-    public Publisher<Void> collect() {
+    @GetMapping(value = "/send")
+    public Publisher<Void> send() {
         return rSocketRequester.route("collectMarketData")
                 .data(getMarketData())
                 .send();
     }
 
     private MarketData getMarketData() {
-        return new MarketData("X", random.nextInt(10));
+
+        return new MarketData("X", 50 + random.nextInt(51));
     }
 
     /**
@@ -70,9 +71,9 @@ public class MarketDataRestController {
         sb.append("<li><a href='/feed/google'>/feed/google</a></li>");
         sb.append("<li><a href='/feed/facebook'>/feed/facebook</a></li>");
         sb.append("</ul>");
-        sb.append("<h3>GET: /collect ONE-WAY - SEND stock request to the RSocket Server</h3>");
+        sb.append("<h3>GET: /send ONE-WAY - SEND stock request to the RSocket Server</h3>");
         sb.append("<ul>");
-        sb.append("<li><a href='/collect'>/collect</a></li>");
+        sb.append("<li><a href='/send'>/send</a></li>");
         sb.append("</ul>");
         return ResponseEntity.ok(Mono.just(sb.toString()));
     }
