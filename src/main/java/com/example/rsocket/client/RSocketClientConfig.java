@@ -1,5 +1,6 @@
 package com.example.rsocket.client;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +23,14 @@ public class RSocketClientConfig {
     // Actual connect and use the requester
     //********************************************
 
-    //@Profile("tcpClient")
+    //@Qualifier("tcpClient")
     //@Bean
     public RSocketRequester tcpClientRequester(RSocketRequester.Builder rSocketRequesterBuilder) {
         return rSocketRequesterBuilder.connectTcp(host, port)
                 .block(Duration.ofSeconds(5));
     }
 
-    //@Profile("webSocketClient")
+    @Qualifier("webSocketClient")
     @Bean
     public RSocketRequester webSocketClientRequester(RSocketRequester.Builder rSocketRequesterBuilder,
                                                      RSocketStrategies strategies) {
@@ -42,13 +43,13 @@ public class RSocketClientConfig {
     // Deferred to connect and use the requester
     //********************************************
 
-    //@Profile("monoTCPClient")
+    //@Qualifier("monoTCPClient")
     //@Bean
     public Mono<RSocketRequester> monoTCPClientRequester(RSocketRequester.Builder rSocketRequesterBuilder) {
         return rSocketRequesterBuilder.connectTcp(host, port);
     }
 
-    //@Profile("monoWebSocketClient")
+    //@Qualifier("monoWebSocketClient")
     //@Bean
     public Mono<RSocketRequester> monoWebSocketClientRequester(RSocketRequester.Builder rSocketRequesterBuilder,
                                                                RSocketStrategies strategies) {
