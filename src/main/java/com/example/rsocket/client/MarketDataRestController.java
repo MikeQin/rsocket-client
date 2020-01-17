@@ -62,21 +62,21 @@ public class MarketDataRestController {
         String html = "<html><title>RSocket Client Restful Endpoints</title>";
         html += "<body style='background-color:black; color:#FC8805'>";
         html += "<h1>Hello RSocket Client!</h1>";
-        html += "<h3><pre>request-> <-response | GET: /current/{stock}</pre></h3>";
+        html += "<h3><pre>Request Response (1:1) | GET: /current/{stock}</pre></h3>";
         html += "<ul>";
         html += "<li><a href='/current/apple'>/current/apple</a></li>";
         html += "<li><a href='/current/google'>/current/google</a></li>";
         html += "<li><a href='/current/facebook'>/current/facebook</a></li>";
         html += "</ul>";
-        html += "<h3><pre>request-> <---server-stream | GET: /feed/{stock}</pre></h3>";
+        html += "<h3><pre>Request Stream (1:M) | GET: /feed/{stock}</pre></h3>";
         html += "<ul>";
         html += "<li><a href='/feed/apple'>/feed/apple</a></li>";
         html += "<li><a href='/feed/google'>/feed/google</a></li>";
         html += "<li><a href='/feed/facebook'>/feed/facebook</a></li>";
         html += "</ul>";
-        html += "<h3><pre>fire & forget: request -> | GET: /collect ONE-WAY - SEND MarketData to RSocket Server</h3></pre>";
+        html += "<h3><pre>Fire & Forget (1:0) | GET: /send ONE-WAY - SEND MarketData to RSocket Server</h3></pre>";
         html += "<ul>";
-        html += "<li><a href='/collect'>/collect</a></li>";
+        html += "<li><a href='/send'>/send</a></li>";
         html += "</ul>";
         html += "</body></html>";
 
