@@ -94,28 +94,29 @@ public class MarketDataRestController {
     }
 
     @GetMapping(value = "/current/{stock}")
-    public Publisher<MarketData> current(@PathVariable("stock") String stock) {
+    public Mono<MarketData> current(@PathVariable("stock") String stock) {
         return rSocketRequester.route("currentMarketData")
                 .data(new MarketDataRequest(stock))
                 .retrieveMono(MarketData.class);
     }
 
     @GetMapping(value = "/feed/{stock}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Publisher<MarketData> feed(@PathVariable("stock") String stock) {
+    public Flux<MarketData> feed(@PathVariable("stock") String stock) {
         return rSocketRequester.route("feedMarketData")
                 .data(new MarketDataRequest(stock))
                 .retrieveFlux(MarketData.class);
     }
 
-    @GetMapping(value = "/collect")
-    public Publisher<Void> collect() {
+    @GetMapping(value = "/send")
+    public Mono<Void> send() {
         return rSocketRequester.route("collectMarketData")
                 .data(getMarketData())
                 .send();
     }
 
     private MarketData getMarketData() {
-        return new MarketData("X", random.nextInt(10));
+
+        return new MarketData("X", 50 + random.nextInt(51));
     }
 }
 ```
